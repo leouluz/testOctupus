@@ -7,7 +7,7 @@ export default function Search() {
 
   DATA = [
     {
-      "id": 1,
+      "key": '1',
       "name": "TV1",
       "type": "TV",
       "price": 73.34832366395793,
@@ -17,7 +17,7 @@ export default function Search() {
       }
     },
     {
-      "id": 2,
+      "key": '2',
       "name": "TV2",
       "type": "TV",
       "price": 6.1666841336700084,
@@ -27,7 +27,7 @@ export default function Search() {
       }
     },
     {
-      "id": 3,
+      "key": '3',
       "name": "Telefone Fixo 1",
       "type": "LANDLINE",
       "price": 60.44790299585252,
@@ -37,7 +37,7 @@ export default function Search() {
       }
     },
     {
-      "id": 4,
+      "key": '4',
       "name": "Telefone Fixo 2",
       "type": "LANDLINE",
       "price": 23.72150724568563,
@@ -47,7 +47,7 @@ export default function Search() {
       }
     },
     {
-      "id": 5,
+      "key": '5',
       "name": "Internet 1",
       "type": "BROADBAND",
       "price": 3.5508402766619263,
@@ -57,7 +57,7 @@ export default function Search() {
       }
     },
     {
-      "id": 6,
+      "key": '6',
       "name": "Internet 2",
       "type": "BROADBAND",
       "price": 24.186328437762644,
@@ -67,7 +67,7 @@ export default function Search() {
       }
     },
     {
-      "id": 7,
+      "key": 7,
       "name": "Adicional 1",
       "type": "ADDON",
       "price": 13.182684787322257,
@@ -77,7 +77,7 @@ export default function Search() {
       }
     },
     {
-      "id": 8,
+      "key": 8,
       "name": "Adicional 2",
       "type": "ADDON",
       "price": 37.31466321918417,
@@ -93,6 +93,7 @@ export default function Search() {
   return (
     <View style={styles.container}>
       <FlatList
+        keyExtractor={(DATA) => DATA.key.toString()}
         data={DATA}
         renderItem={renderItem}
       />
