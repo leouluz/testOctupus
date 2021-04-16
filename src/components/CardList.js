@@ -9,7 +9,7 @@ export function CardList(props) {
     <View style={styles.cardResult}>
       <Text style={styles.textInfoTitle}> {props.item.name} </Text>
       <View flexDirection="row">
-        <Text style={styles.textInfoB}>{props.item.name}</Text>
+        <Text style={styles.textInfoB}>{props.item.type}</Text>
       </View>
       <View style={styles.priceLocation}>
         <Text style={styles.textInfo}>{`R$ ${price}`}</Text>
