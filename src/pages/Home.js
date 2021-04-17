@@ -1,5 +1,10 @@
 import React from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, View } from 'react-native'
+import LottieView from 'lottie-react-native';
+
+import HomeAnimation from '../assets/homeAnimation.json'
+
+import { Container, Tittle, InfoText, ButtonHome, ButtonText } from './homeStyles'
 
 export default function Home({ navigation }) {
 
@@ -8,54 +13,33 @@ export default function Home({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
+    <Container>
       <View>
-        <Text style={styles.tittle}>
+        <Tittle>
           Meus Planos
-        </Text>
-        <Text style={styles.infoText}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-          when an unknown printer took a galley of type and scrambled it to make a type
-          specimen book. It has survived not only five centuries, but also the leap into
-          electronic typesetting, remaining essentially unchanged.
-        </Text>
+        </Tittle>
+        <InfoText>
+          Quer desfrutar dos melhores planos de TV, BROADBAND, LANDLINE e ADDON?
+          Acesse nosso link abaixo e veja os pacotes disponiveis proximos de sua região.
+          Nós lhe oferemos as melhores opções com qualidade.
+        </InfoText>
+        <LottieView
+          autoPlay
+          style={{
+            alignSelf: 'center',
+            marginTop:'5%',
+            width: 350,
+            height: 350,
+            backgroundColor: '#191d36',
+          }}
+          source={HomeAnimation}
+          />
       </View>
-      <TouchableOpacity
-        style={styles.button}
+      <ButtonHome
         onPress={handlerNavigation}
       >
-        <Text> Home </Text>
-      </TouchableOpacity>
-    </View>
+        <ButtonText> Home </ButtonText>
+      </ButtonHome>
+    </Container>
   )
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 15,
-    paddingTop: '20%'
-  },
-  tittle: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    marginBottom: 10
-  },
-  infoText: {
-    marginBottom: 120,
-
-  },
-  button: {
-    width: '60%',
-    height: '8%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fdfdfd',
-    elevation: 5
-  }
-
-})

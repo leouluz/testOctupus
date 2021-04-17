@@ -13,14 +13,10 @@ export default function Map() {
       const { granted } = await requestForegroundPermissionsAsync()
 
       if (granted) {
-        const teste = await getCurrentPositionAsync({
-          enabledHighAccuracy: true,
-        })
         const { coords } = await getCurrentPositionAsync({
           enabledHighAccuracy: true,
         })
 
-        console.log(teste)
         const { latitude, longitude } = coords;
 
         setCurrentRegion({

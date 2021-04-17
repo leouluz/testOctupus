@@ -7,7 +7,6 @@ const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 
 import Home from './pages/Home'
-import List from './pages/List'
 import Search from './pages/Search'
 import MapScreen from './pages/Map'
 
@@ -17,11 +16,10 @@ function Tabs() {
       headerMode={false}
       tabBarOptions={{
         labelStyle: { fontSize: 20 },
-        style: { justifyContent: 'center' }
+        style: { justifyContent: 'center', alignItems: 'center'}
       }}
     >
       <Tab.Screen name="Search" component={Search} />
-      <Tab.Screen name="List" component={List} />
       <Tab.Screen name="Map" component={MapScreen} />
     </Tab.Navigator>
   )

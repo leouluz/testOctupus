@@ -25,7 +25,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     elevation: 2,
-    marginBottom: 4
+    marginBottom: 4,
+    opacity: 0.9,
+    marginHorizontal:4
   },
   priceLocation: {
     padding: 8,

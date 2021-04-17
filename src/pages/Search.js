@@ -1,10 +1,31 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react'
-import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { getCurrentPositionAsync } from 'expo-location'
+
+import api from '../service/api'
+
+import CardList from '../components/CardList'
 
 export default function Search() {
 
-  const [localization, setLocalization] = useState('teste')
+  const [localization, setLocalization] = useState('')
+  const [info, setInfo] = useState([]);
+
+  useEffect(() => {
+    async function loadList() {
+      const { coords } = await getCurrentPositionAsync({
+        enabledHighAccuracy: true,
+      })
+    
+      const { latitude, longitude } = coords;
+      const response = await api.get(`options?lat=${latitude}8&lon=${longitude}`)
+      await setInfo(response.data.list)
+    }
+    loadList()
+  }, [])
+
+  const renderItem = ({ item }) => (<CardList item={item} />)
 
   return (
     <View style={styles.container}>
@@ -24,18 +45,10 @@ export default function Search() {
           }
         </View>
       </TouchableOpacity>
-
-      <View style={styles.cardResult}>
-        <Text style={styles.textInfoTitle}> PACOTE 1 </Text>
-        <View flexDirection="row">
-          <Text style={styles.textInfoB}> TV1</Text>
-          <Text style={styles.textInfoB}> Telefone</Text>
-        </View>
-        <View style={styles.priceLocation}>
-          <Text style={styles.textInfo}>R$ 250,00</Text>
-          <Text style={styles.textInfo}>100 KM</Text>
-        </View>
-      </View>
+      <FlatList
+        data={info}
+        renderItem={renderItem}
+      />
     </View>
   )
 }
@@ -43,7 +56,8 @@ export default function Search() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 8
+    padding: 10,
+    backgroundColor: '#191d36'
   },
   input: {
     height: 46,
