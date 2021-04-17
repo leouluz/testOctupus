@@ -2,6 +2,9 @@ import { Ionicons } from '@expo/vector-icons';
 import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import { getCurrentPositionAsync } from 'expo-location'
+import LottieView from 'lottie-react-native';
+
+import LoadList from '../assets/loadList.json'
 
 import api from '../service/api'
 
@@ -21,6 +24,7 @@ export default function Search() {
       const { latitude, longitude } = coords;
       const response = await api.get(`options?lat=${latitude}8&lon=${longitude}`)
       await setInfo(response.data.list)
+      setLocalization(true)
     }
     loadList()
   }, [])
@@ -45,10 +49,26 @@ export default function Search() {
           }
         </View>
       </TouchableOpacity>
+      {
+        !localization ? (
+        <LottieView
+          autoPlay
+          style={{
+            alignSelf: 'center',
+            marginTop:'5%',
+            width: 350,
+            height: 350,
+            backgroundColor: '#191d36',
+          }}
+          source={LoadList}
+          />
+          ) : 
       <FlatList
-        data={info}
-        renderItem={renderItem}
+      data={info}
+      renderItem={renderItem}
+      keyExtractor={(info, index) => index.toString()}
       />
+    }
     </View>
   )
 }

@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { Text } from 'react-native'
-import MapView, { Marker, Callout } from 'react-native-maps'
+import LottieView from 'lottie-react-native';
+import { FontAwesome } from '@expo/vector-icons'
+import MapView, { Marker } from 'react-native-maps'
 import { getCurrentPositionAsync, requestForegroundPermissionsAsync } from 'expo-location'
+
+import api from '../service/api'
+
+import LoadMap from '../assets/loadMap.json'
 
 export default function Map() {
 
   const [currentRegion, setCurrentRegion] = useState(null)
+  const [info, setInfo] = useState([])
 
   useEffect(() => {
     async function loadInitalPosition() {
@@ -22,22 +28,41 @@ export default function Map() {
         setCurrentRegion({
           latitude,
           longitude,
-          latitudeDelta: 0.006,
-          longitudeDelta: 0.006
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05
         })
+
+      const response = await api.get(`options?lat=${latitude}8&lon=${longitude}`)
+      await setInfo(response.data.list)
       }
     }
     loadInitalPosition()
   }, [])
   if (!currentRegion) {
-    return null
+    return ( 
+      <LottieView
+          autoPlay
+          style={{
+            flex:1,
+            alignSelf: 'center',
+            backgroundColor: '#191d36'
+          }}
+          source={LoadMap}
+          />
+    )
   }
   return (
     <MapView initialRegion={currentRegion} style={{ flex: 1 }}>
-      <Marker coordinate={{ latitude: -21.111246, longitude: -47.9898934 }}>
-        <Callout><Text >testando</Text></Callout>
-
-      </Marker>
+      {
+        info.map((infos, index) => (
+          <Marker 
+           coordinate={{ latitude: infos.coords.lat, longitude: infos.coords.lon }}
+           key={index}
+           >
+             <FontAwesome name="map-marker" size={55} color="black" />
+           </Marker>
+        ))
+      }
     </MapView>
   )
 }
