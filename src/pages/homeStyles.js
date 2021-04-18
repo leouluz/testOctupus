@@ -32,4 +32,5 @@ export const ButtonHome = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   background-color: #fdfdfd;
+  border-radius: 10px;
   `;

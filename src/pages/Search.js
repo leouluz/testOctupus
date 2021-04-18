@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, FlatList, Modal } from 'react-native'
 import { getCurrentPositionAsync } from 'expo-location'
 import LottieView from 'lottie-react-native';
 
@@ -10,9 +10,12 @@ import api from '../service/api'
 
 import CardList from '../components/CardList'
 
+import MapPositions from './Map'
+
 export default function Search() {
 
   const [localization, setLocalization] = useState('')
+  const [modaOnOff, setModaOnOff] = useState(false)
   const [info, setInfo] = useState([]);
 
   useEffect(() => {
@@ -29,7 +32,13 @@ export default function Search() {
     loadList()
   }, [])
 
-  const renderItem = ({ item }) => (<CardList item={item} />)
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => {setModaOnOff(true)}}
+    >
+      <CardList item={item} />
+    </TouchableOpacity>
+  )
 
   return (
     <View style={styles.container}>
@@ -49,6 +58,32 @@ export default function Search() {
           }
         </View>
       </TouchableOpacity>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modaOnOff}
+        >
+        <View style={styles.modalView}>
+            <MapPositions/>
+            <TouchableOpacity
+              onPress={(() => {setModaOnOff(false)})}
+              style={{ 
+                height: 50,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#191d36',
+              }}
+              >
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight:'bold',
+                  color: '#fdfdfd'
+                }}
+                >Fechar</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
       {
         !localization ? (
         <LottieView
@@ -129,5 +164,24 @@ const styles = StyleSheet.create({
     padding: 4,
     marginHorizontal: 4,
     elevation: 2
-  }
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    flex: 1,
+    margin: 20,
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
 })

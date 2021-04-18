@@ -9,7 +9,7 @@ import { Container, Tittle, InfoText, ButtonHome, ButtonText } from './homeStyle
 export default function Home({ navigation }) {
 
   function handlerNavigation() {
-    navigation.navigate('Menu')
+    navigation.navigate('Search')
   }
 
   return (
