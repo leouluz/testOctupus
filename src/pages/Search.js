@@ -21,6 +21,7 @@ export default function Search() {
   const [localization, setLocalization] = useState('')
   const [modaOnOff, setModaOnOff] = useState(false)
   const [info, setInfo] = useState([]);
+  const [packges, setPackges] = useState([]);
 
   useEffect(() => {
     async function loadList() {
@@ -32,6 +33,20 @@ export default function Search() {
       const response = await api.get(`options?lat=${latitude}8&lon=${longitude}`)
       await setInfo(response.data.list)
       setLocalization(true)
+
+      info.map((product, index) => {
+        
+
+        let pacote = {
+          TV: product.name == 'TV1' ? product.name : '',
+          BROADBAND: product.name,
+          LANDLINE: product.name,
+          ADDON: product.name,
+        }
+        setPackges(pacote)
+        console.log(packges)
+      })
+
     }
     loadList()
   }, [])
